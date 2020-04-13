@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, FlatList, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
+import { createNewDeck } from '../store/actions'
 
 
 class NewDeckView extends Component {
@@ -21,6 +22,12 @@ class NewDeckView extends Component {
         }))
     }
 
+    onSubmit = () => {
+        this.props.dispatch(createNewDeck(this.state.inputValue))
+
+        this.props.navigation.navigate('DeckList')
+    }
+
     render() {
         const { decks } = this.props
         return (
@@ -28,12 +35,12 @@ class NewDeckView extends Component {
                 <View>
                     <Text>What is the title of the new deck?</Text>
                     <TextInput
-                      onChangeText={ text => onChangeText(text) }
+                      onChangeText={ text => this.onChangeText(text) }
                       value={this.state.inputValue}
                       />
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={ this.onSubmit }>
                         <Text>Submit</Text>
                     </TouchableOpacity>
                 </View>

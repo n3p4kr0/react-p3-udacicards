@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
+import { addCardToDeck } from '../store/actions'
 
 
 class NewQuestionView extends Component {
@@ -29,7 +30,20 @@ class NewQuestionView extends Component {
         }))
     }
 
+    onSubmit = () => {
+        const question = {
+            question: this.state.questionValue,
+            answer: this.state.answerValue,
+        }
+
+        this.props.dispatch(addCardToDeck(this.props.deck.title, question))
+        
+        this.props.navigation.navigate("DeckList")
+    }
+
     render() {
+        console.log(this.props)
+
         return (
             <View>
                 <View>
@@ -47,7 +61,7 @@ class NewQuestionView extends Component {
                       />
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={ this.onSubmit }>
                         <Text>Submit</Text>
                     </TouchableOpacity>
                 </View>
@@ -56,15 +70,26 @@ class NewQuestionView extends Component {
     }
 }
 
-function mapStateToProps({ decks }) {
-    return {
-        decks
+function mapStateToProps({ decks }, { route }) {
+    console.log(decks)
+    if(typeof route.params !== 'undefined' && route.params.hasOwnProperty('title')) {
+        return {
+            deck: decks[route.params.title]
+        }
     }
+
+    return {}
 }
 
 //export default connect(mapStateToProps)(NewQuestionView)
-export default function(props) {
+/*export default function(props) {
     const navigation = useNavigation()
 
     return <NewQuestionView {...props} navigation={navigation}/>
-}
+}*/
+
+export default connect(mapStateToProps)((props) => {
+    const navigation = useNavigation()
+
+    return (<NewQuestionView {...props} navigation={navigation}/>)
+})

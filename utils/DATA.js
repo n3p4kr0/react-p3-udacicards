@@ -1,4 +1,4 @@
-export const decks = {
+let decks = {
     React: {
       title: 'React',
       questions: [
@@ -21,4 +21,14 @@ export const decks = {
         }
       ]
     }
+}
+
+export function _getDecks () {
+  return new Promise((res, rej) => {
+    setTimeout(() => 
+    {
+      //console.log(decks)
+      res({decks})
+    }, 1000)
+  })
 }

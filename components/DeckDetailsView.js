@@ -11,8 +11,8 @@ class DeckDetailsView extends Component {
     }
 
     onPressBtnAddCard = () => {
-        const { title, questions } = this.props.route.params
-        this.props.navigation.navigate('TabDeck', { screen: 'NewQuestion', params: { title: title, questions: questions } })
+        const { title } = this.props.route.params
+        this.props.navigation.navigate('NewQuestion', { title: title })
     }
 
     onPressBtnShowQuiz = () => {
@@ -49,11 +49,16 @@ function mapStateToProps({ deck }) {
     }
 }
 
-export default function(props) {
+/*export default function(props) {
     const navigation = useNavigation()
 
     console.log(navigation)
 
     return <DeckDetailsView {...props} navigation={navigation}/>
-}
-    //export default connect(mapStateToProps)(DeckDetailsView)
+}*/
+
+export default connect(mapStateToProps)((props) => {
+    const navigation = useNavigation()
+
+    return (<DeckDetailsView {...props} navigation={navigation}/>)
+})
