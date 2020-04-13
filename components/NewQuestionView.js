@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useNavigation } from '@react-navigation/native';
 
 
 class NewQuestionView extends Component {
     static propTypes = {
-        decks: PropTypes.object.isRequired
+        //title: PropTypes.string.isRequired
     }
 
     state = {
@@ -29,14 +30,13 @@ class NewQuestionView extends Component {
     }
 
     render() {
-        const { decks } = this.props
         return (
             <View>
                 <View>
                     <Text>Question:</Text>
                     <TextInput
                       onChangeText={ text => this.onChangeQuestionValue(text) }
-                      value={value}
+                      value={this.state.questionValue}
                       />
                 </View>          
                 <View>
@@ -62,4 +62,9 @@ function mapStateToProps({ decks }) {
     }
 }
 
-export default connect(mapStateToProps)(NewQuestionView)
+//export default connect(mapStateToProps)(NewQuestionView)
+export default function(props) {
+    const navigation = useNavigation()
+
+    return <NewQuestionView {...props} navigation={navigation}/>
+}

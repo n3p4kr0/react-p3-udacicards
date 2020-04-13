@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useNavigation } from '@react-navigation/native';
 
 
 class NewDeckView extends Component {
@@ -10,7 +11,7 @@ class NewDeckView extends Component {
     }
 
     state = {
-        inputValue = ''
+        inputValue: ''
     }
 
     onChangeText = (newValue) => {
@@ -48,3 +49,11 @@ function mapStateToProps({ decks }) {
 }
 
 export default connect(mapStateToProps)(NewDeckView)
+
+/*export default function(props) {
+    const navigation = useNavigation()
+
+    console.log(navigation)
+
+    return <DeckDetailsView {...props} navigation={navigation}/>
+}*/
