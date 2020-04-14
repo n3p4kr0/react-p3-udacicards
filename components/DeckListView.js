@@ -26,7 +26,6 @@ function DeckListItem(deck) {
 class DeckListView extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
 
         /*React.useLayoutEffect(() => {
           props.navigation.setOptions({
@@ -68,7 +67,6 @@ function mapStateToProps({ decks }) {
     Object.keys(decks).map((id) => {
       deckArray.push(decks[id])
     });
-    console.log(deckArray)
 
     return {
         decks: deckArray

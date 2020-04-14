@@ -3,7 +3,6 @@ import { GET_DECKS, GET_DECK, ADD_CARD_TO_DECK, CREATE_NEW_DECK } from '../actio
 export default function decks(state = {}, action) {
     switch(action.type) {
         case GET_DECKS:
-            console.log('Là')
             return {
                 ...state,
                 ...action.decks

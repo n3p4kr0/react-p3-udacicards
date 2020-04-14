@@ -17,11 +17,11 @@ class DeckDetailsView extends Component {
 
     onPressBtnShowQuiz = () => {
         const { title, questions } = this.props.route.params
-        this.props.navigation.navigate('Quiz')
+        //console.log(this.props.route)
+        this.props.navigation.navigate('Quiz', { title: this.props.route.params.title, questions: this.props.route.params.questions })
     }
 
     render() {
-        console.log(this.props)
         const { title, questions } = this.props.route.params
         return (
             <View>
@@ -48,14 +48,6 @@ function mapStateToProps({ deck }) {
         deck
     }
 }
-
-/*export default function(props) {
-    const navigation = useNavigation()
-
-    console.log(navigation)
-
-    return <DeckDetailsView {...props} navigation={navigation}/>
-}*/
 
 export default connect(mapStateToProps)((props) => {
     const navigation = useNavigation()

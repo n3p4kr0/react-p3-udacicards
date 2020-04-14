@@ -56,11 +56,3 @@ function mapStateToProps({ decks }) {
 }
 
 export default connect(mapStateToProps)(NewDeckView)
-
-/*export default function(props) {
-    const navigation = useNavigation()
-
-    console.log(navigation)
-
-    return <DeckDetailsView {...props} navigation={navigation}/>
-}*/

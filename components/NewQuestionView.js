@@ -42,8 +42,6 @@ class NewQuestionView extends Component {
     }
 
     render() {
-        console.log(this.props)
-
         return (
             <View>
                 <View>
@@ -71,7 +69,6 @@ class NewQuestionView extends Component {
 }
 
 function mapStateToProps({ decks }, { route }) {
-    console.log(decks)
     if(typeof route.params !== 'undefined' && route.params.hasOwnProperty('title')) {
         return {
             deck: decks[route.params.title]

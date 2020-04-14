@@ -27,7 +27,6 @@ export function _getDecks () {
   return new Promise((res, rej) => {
     setTimeout(() => 
     {
-      //console.log(decks)
       res({decks})
     }, 1000)
   })
