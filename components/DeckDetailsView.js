@@ -16,8 +16,6 @@ class DeckDetailsView extends Component {
     }
 
     onPressBtnShowQuiz = () => {
-        const { title, questions } = this.props.route.params
-        //console.log(this.props.route)
         this.props.navigation.navigate('Quiz', { title: this.props.route.params.title, questions: this.props.route.params.questions })
     }
 

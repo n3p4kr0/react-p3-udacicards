@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useLayoutEffect } from 'react'
 import { SafeAreaView, Button, StyleSheet, Text, FlatList, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -6,7 +6,9 @@ import { decks } from '../utils/DATA'
 import { useNavigation } from '@react-navigation/native';
 
 function DeckListItem(deck) {
+    console.log(deck.deck)
     deck = deck.deck
+
     const navigation = useNavigation();
     return (
       <TouchableOpacity 
@@ -23,43 +25,29 @@ function DeckListItem(deck) {
     )
 }
 
-class DeckListView extends Component {
-    constructor(props) {
-        super(props)
 
-        /*React.useLayoutEffect(() => {
-          props.navigation.setOptions({
-            headerRight: () => (
-              <Button onPress={() => props.navigation.navigate("NewDeck")} title="Add Deck" />
-            ),
-          });
-        });*/
-    }
+function DeckListView(props) {
+    const navigation = useNavigation()
 
-    static propTypes = {
-        decks: PropTypes.array.isRequired
-    }
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerRight: () => (
+          <Button onPress={() => props.navigation.navigate("NewDeck")} title="Add Deck" />
+        ),
+      });
+    });
 
-    renderItem = ({item}) => {
-        return (
-            <DeckListItem deck={item} />
-        )
-    }
+    const { decks } = props
 
-    render() {
-          const { decks } = this.props
-          let deckArray = []
-
-          return (
-            <SafeAreaView>
-                <FlatList 
-                  data={decks}
-                  renderItem={this.renderItem}
-                  keyExtractor={item => item.title}
-                />
-            </SafeAreaView>
-        )
-    }
+    return (
+      <SafeAreaView>
+          <FlatList 
+            data={decks}
+            renderItem={item => {return (<DeckListItem deck={item.item} />)}}
+            keyExtractor={item => item.title}
+          />
+      </SafeAreaView>
+    )
 }
 
 function mapStateToProps({ decks }) {
@@ -78,11 +66,3 @@ export default connect(mapStateToProps)((props) => {
 
   return (<DeckListView {...props} navigation={navigation}/>)
 })
-
-/*export default function(props) {
-  const navigation = useNavigation()
-
-
-  return <DeckListView {...props} navigation={navigation}/>
-}
-//export default connect(mapStateToProps)(DeckListView)*/

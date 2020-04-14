@@ -44,10 +44,8 @@ export default class App extends React.Component {
         <PersistGate persistor={persistor}>
           <NavigationContainer>
             <Stack.Navigator initialRouteName='DeckList'>
-              <Stack.Screen 
-                name="DeckList"
-                component={DeckListView}
-                 />
+              <Stack.Screen name="DeckList" component={DeckListView} />
+              <Stack.Screen name="NewDeck" component={NewDeckView} />
               <Stack.Screen name="TabDeck" component={TabDeckView} />
               <Stack.Screen name="Quiz" component={QuizView} />
               <Stack.Screen name="NewQuestion" component={NewQuestionView} />

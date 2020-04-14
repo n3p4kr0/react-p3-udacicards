@@ -47,9 +47,14 @@ class QuizView extends Component {
             return (
                 <View>
                     <Text>Quiz</Text>
-                    <TouchableOpacity onPress={this.startQuiz}>
-                        <Text>Start the quiz !</Text>
-                    </TouchableOpacity>
+                    { questions.length > 0 
+                    ?
+                        <TouchableOpacity onPress={this.startQuiz}>
+                            <Text>Start the quiz !</Text>
+                        </TouchableOpacity>
+
+                    :   <Text>To play a quiz, please add at least a card to the deck.</Text>
+                    }
                 </View>
             )
         }
@@ -106,26 +111,17 @@ class QuizView extends Component {
     }
 }
 
-function mapStateToProps({ title, questions }, {route}) {
-    console.log(title)
-    console.log(questions)
+function mapStateToProps({ }, {route}) {
     return {
         title: route.params.title,
         questions: route.params.questions
     }
 }
 
+connect()
 export default connect(mapStateToProps)((props) => {
     const navigation = useNavigation()
     console.log(props)
 
     return (<QuizView {...props} navigation={navigation}/>)
 })
-
-/*export default function(props) {
-    const navigation = useNavigation()
-
-    return <QuizView {...props} navigation={navigation}/>
-}*/
-
-//export default connect(mapStateToProps)(QuizView)

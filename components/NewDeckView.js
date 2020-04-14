@@ -29,7 +29,6 @@ class NewDeckView extends Component {
     }
 
     render() {
-        const { decks } = this.props
         return (
             <View>
                 <View>
@@ -55,4 +54,8 @@ function mapStateToProps({ decks }) {
     }
 }
 
-export default connect(mapStateToProps)(NewDeckView)
+export default connect(mapStateToProps)((props) => {
+    const navigation = useNavigation()
+
+    return (<NewDeckView {...props} navigation={navigation}/>)
+})
