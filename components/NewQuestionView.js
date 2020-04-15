@@ -78,13 +78,6 @@ function mapStateToProps({ decks }, { route }) {
     return {}
 }
 
-//export default connect(mapStateToProps)(NewQuestionView)
-/*export default function(props) {
-    const navigation = useNavigation()
-
-    return <NewQuestionView {...props} navigation={navigation}/>
-}*/
-
 export default connect(mapStateToProps)((props) => {
     const navigation = useNavigation()
 

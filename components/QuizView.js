@@ -10,7 +10,6 @@ import { shuffleArray } from '../utils/helpers'
 class QuizView extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
 
         this.state = {
             quizMode: false,
@@ -26,7 +25,6 @@ class QuizView extends Component {
 
 
     startQuiz = () => {
-        //console.log(this.props)
         // Shuffle the deck in the state and activates quizMode
         const { questions } = this.state.questions
 
@@ -39,9 +37,7 @@ class QuizView extends Component {
 
 
     render() {
-        console.log(this.state)
         const {questions, counter, score, quizMode, currentCardSide} = this.state
-        console.log(questions)
 
         if(!quizMode) {
             return (
@@ -121,7 +117,6 @@ function mapStateToProps({ }, {route}) {
 connect()
 export default connect(mapStateToProps)((props) => {
     const navigation = useNavigation()
-    console.log(props)
 
     return (<QuizView {...props} navigation={navigation}/>)
 })

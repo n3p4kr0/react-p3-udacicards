@@ -4,7 +4,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
 import { createNewDeck } from '../store/actions'
+import { white, orange, royalBlue } from '../utils/colors'
+import ValidatedTextInput from './elements/ValidatedTextInput'
+import validate from 'validate.js'
 
+const formConstraints = {
+
+}
 
 class NewDeckView extends Component {
     static propTypes = {
@@ -15,12 +21,7 @@ class NewDeckView extends Component {
         inputValue: ''
     }
 
-    onChangeText = (newValue) => {
-        this.setState((prevState) => ({
-            ...prevState,
-            inputValue: newValue
-        }))
-    }
+
 
     onSubmit = () => {
         this.props.dispatch(createNewDeck(this.state.inputValue))
@@ -30,11 +31,11 @@ class NewDeckView extends Component {
 
     render() {
         return (
-            <View>
-                <View>
-                    <Text>What is the title of the new deck?</Text>
+            <View style={styles.container}>
+                <View style={styles.inputView}>
+                    <Text style={styles.text}>What is the title of the new deck?</Text>
                     <TextInput
-                      onChangeText={ text => this.onChangeText(text) }
+                      onChangeText={ text => this.setState((prevState) => this.setState({ ...prevState, inputValue: text }))}
                       value={this.state.inputValue}
                       />
                 </View>
@@ -47,6 +48,30 @@ class NewDeckView extends Component {
         )
     }
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: royalBlue,
+        flex: 1
+    },
+    text: {
+        color: white,
+        fontSize: 20,
+    },
+    inputView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 100
+    }
+})
+
+
+
+
+
+
+
 
 function mapStateToProps({ decks }) {
     return {

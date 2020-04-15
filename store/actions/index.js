@@ -4,11 +4,13 @@ export const GET_DECKS = 'GET_DECKS'
 export const GET_DECK = 'GET_DECK'
 export const CREATE_NEW_DECK = 'CREATE_NEW_DECK'
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
+export const REMOVE_DECK = 'REMOVE_DECK'
 
 export function handleGetInitialData() {
     return (dispatch) => {
         return retrieveDecks()
           .then(({ decks }) => {
+            console.log(decks)
             dispatch(setDecks(decks[0].decks));
             //dispatch(setDecks(decks));
         }
@@ -45,5 +47,11 @@ export function addCardToDeck(id, { question, answer }) {
             question,
             answer
         }
+    }
+}
+export function removeDeck(id) {
+    return {
+        type: REMOVE_DECK,
+        id
     }
 }

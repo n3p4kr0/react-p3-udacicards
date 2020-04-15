@@ -1,4 +1,4 @@
-import { GET_DECKS, GET_DECK, ADD_CARD_TO_DECK, CREATE_NEW_DECK } from '../actions'
+import { GET_DECKS, ADD_CARD_TO_DECK, CREATE_NEW_DECK, REMOVE_DECK } from '../actions'
 
 export default function decks(state = {}, action) {
     switch(action.type) {
@@ -19,9 +19,14 @@ export default function decks(state = {}, action) {
             return {
                 ...state,
                 [action.title]: {
-                    title: [action.title],
+                    title: action.title,
                     questions: []
                 }
+            }
+        case REMOVE_DECK:
+            delete state[action.id]
+            return {
+                ...state
             }
         default:
             return state
