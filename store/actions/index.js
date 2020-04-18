@@ -8,13 +8,12 @@ export const REMOVE_DECK = 'REMOVE_DECK'
 
 export function handleGetInitialData() {
     return (dispatch) => {
-        return retrieveDecks()
+        var deferred =  retrieveDecks()
           .then(({ decks }) => {
-            console.log(decks)
             dispatch(setDecks(decks[0].decks));
-            //dispatch(setDecks(decks));
-        }
-        )
+        })
+
+        return deferred.promise
     }
 }
 

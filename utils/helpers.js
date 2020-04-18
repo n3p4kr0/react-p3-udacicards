@@ -9,7 +9,6 @@ export function retrieveDecks() {
 }
 
 export function shuffleArray(array) {
-  let newArray = array
   for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var temp = array[i];
@@ -17,5 +16,5 @@ export function shuffleArray(array) {
       array[j] = temp;
   }
 
-  return newArray
+  return array
 }

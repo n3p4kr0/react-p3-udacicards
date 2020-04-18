@@ -5,29 +5,37 @@ import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
 import { createNewDeck } from '../store/actions'
 import { white, orange, royalBlue } from '../utils/colors'
-import ValidatedTextInput from './elements/ValidatedTextInput'
-import validate from 'validate.js'
-
-const formConstraints = {
-
-}
 
 class NewDeckView extends Component {
-    static propTypes = {
-        decks: PropTypes.object.isRequired
-    }
-
     state = {
-        inputValue: ''
+        inputValue: '',
+        error: ''
     }
-
-
 
     onSubmit = () => {
+        // TODO : Check if no other deck already has the same title
+        if(this.props.decks.hasOwnProperty(this.state.inputValue)) {
+            this.setState((prevState) => ({
+                ...prevState,
+                error: 'You already have a deck named ' + this.state.inputValue
+            }))
+            return;
+        }
+
+        // TODO : Check if the name is not empty
+        if(this.state.inputValue === '') {
+            this.setState((prevState) => ({
+                ...prevState,
+                error: "The deck's name cannot be empty"
+            }))
+            return;
+        }
+
         this.props.dispatch(createNewDeck(this.state.inputValue))
 
-        this.props.navigation.navigate('DeckList')
-    }
+        setTimeout((() => {
+            this.props.navigation.navigate("DeckDetails", { title: this.state.inputValue, questions: [] }) 
+        }), 200)    }
 
     render() {
         return (
@@ -35,13 +43,19 @@ class NewDeckView extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.text}>What is the title of the new deck?</Text>
                     <TextInput
-                      onChangeText={ text => this.setState((prevState) => this.setState({ ...prevState, inputValue: text }))}
+                      style={styles.input}
+                      placeholder='Enter a deck title'
+                      // TODO : CHANGE THIS TO A CALLBACK FUNCTION
+                      onChangeText={ text => this.setState((prevState) => this.setState({ ...prevState, inputValue: text, error: '' }))}
                       value={this.state.inputValue}
                       />
+                    { this.state.error !== '' && (<Text style={styles.error}>{this.state.error}</Text>) }
                 </View>
-                <View>
-                    <TouchableOpacity onPress={ this.onSubmit }>
-                        <Text>Submit</Text>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity
+                        style={styles.btn}
+                        onPress={ this.onSubmit }>
+                        <Text style={styles.textBtn}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -57,19 +71,49 @@ const styles = StyleSheet.create({
     },
     text: {
         color: white,
-        fontSize: 20,
+        fontSize: 25,
     },
     inputView: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100
+        marginTop: 100,
+        flex: 1
+    },
+    input: {
+        marginTop: 30,
+        height: 40,
+        borderBottomColor: white,
+        borderBottomWidth: 1,
+        alignItems: 'flex-start',
+        width: 300,
+        color: white,
+    },
+    btnContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btn: {
+        backgroundColor: orange,
+        borderRadius: 30,
+        paddingRight: 30,
+        paddingLeft: 30,
+        paddingTop: 15,
+        paddingBottom: 15,
+        marginTop: 15,
+        marginBottom: 15
+    },
+    textBtn: {
+        color: white,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    error: {
+        color: white,
+        marginTop: 10,
+        fontStyle: 'italic'
     }
 })
-
-
-
-
-
 
 
 

@@ -16,6 +16,7 @@ import { store, persistor } from './store'
 import { Provider } from 'react-redux'
 import { handleGetInitialData } from './store/actions'
 import { white, royalBlue } from './utils/colors'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Stack = createStackNavigator();
 
@@ -23,16 +24,21 @@ const Stack = createStackNavigator();
 export default class App extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = { spinner: true }
   }
 
-  componentDidMount() {
-    store.dispatch(handleGetInitialData())
+  getInitialData = () => {
+    if((Object.keys(store.getState().decks).length === 0)) {
+      store.dispatch(handleGetInitialData())
+    }
   }
 
   render() {
     return (
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate persistor={persistor} onBeforeLift={this.getInitialData()}>
+          <Spinner visible={Object.keys(store.getState().decks) === 0} textContent={'Loading'} textStyle={styles.spinner} />
           <NavigationContainer>
             <Stack.Navigator
               style={styles.container} 
@@ -51,7 +57,7 @@ export default class App extends React.Component {
                 name="NewDeck" 
                 component={NewDeckView} 
                 options= {{
-                  headerTitle: 'Add a Deck'
+                  headerTitle: 'Add a Deck',
                 }}
               />
               <Stack.Screen name="DeckDetails" component={DeckDetailsView} />
@@ -70,4 +76,7 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight,
     backgroundColor: '#FFFFFF',
   },
+  spinnerText: {
+    color: white
+  }
 });

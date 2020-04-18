@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
 import { royalBlue, white, orange } from '../utils/colors'
 import { removeDeck } from '../store/actions'
+import Toast from 'react-native-root-toast';
 
 class DeckDetails extends Component {
     onPressBtnAddCard = () => {
@@ -13,7 +14,21 @@ class DeckDetails extends Component {
     }
 
     onPressBtnShowQuiz = () => {
-        this.props.navigation.navigate('Quiz', { title: this.props.route.params.title, questions: this.props.route.params.questions })
+        if(this.props.route.params.questions.length === 0) {
+            let toast = Toast.show('To start a quiz, please add at least one card to your deck.', {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
+            return
+        }
+        this.props.navigation.navigate(
+            'Quiz',
+            { title: this.props.route.params.title, questions: this.props.route.params.questions }
+        )
     }
 
     onPressBtnRemoveDeck = () => {
@@ -54,7 +69,7 @@ class DeckDetails extends Component {
 function DeckDetailsView (props) {
     useLayoutEffect(() => {
         props.navigation.setOptions({
-          title: 'Deck ' + props.route.params.title
+          title: props.route.params.title
         });
       });
 
@@ -82,14 +97,15 @@ const styles = StyleSheet.create({
       backgroundColor: royalBlue
     },
     titleContainer: {
-      flex: 2,
+      flex: 1.5,
       alignItems: 'center',
       justifyContent: 'center',
     },
     btnContainer: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
+      marginBottom: 50
     },
     deckTitleText: {
         fontSize: 50,

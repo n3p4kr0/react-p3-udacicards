@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
-import { white, royalBlue } from '../utils/colors'
+import { white, orange, royalBlue } from '../utils/colors'
 
-function removeData() {
+/*function removeData() {
   AsyncStorage.clear()
     .then(() => {
       console.log('DELETED')
@@ -15,12 +15,10 @@ function removeData() {
     }).finally(() => {
       console.log('Done')
     })
-}
+}*/
 
 function DeckListItem(deck) {
     deck = deck.deck
-    console.log(deck)
-    console.log(deck.questions)
 
     const navigation = useNavigation();
     return (
@@ -64,10 +62,10 @@ function DeckListView(props) {
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcomeContent}>Welcome ! Your brain is nothing more than a muscle: keep exercising to get better!</Text>
           </View>
-          <TouchableOpacity
+          {/*<TouchableOpacity
             onPress={removeData}>
             <Text>_DEV_ : DELETE ALL DATA FROM ASYNC STORAGE</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
           <SafeAreaView style={styles.listContainer}>
             <FlatList 
               style={styles.list}
@@ -128,9 +126,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 60
   },
   itemContainer: {
-    backgroundColor: '#FF5C39',
     padding: 10,
-    paddingLeft: 30,
     marginLeft: 30,
     marginRight: 30,
     marginTop: 10,
@@ -138,6 +134,15 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 30,
     borderRadius: 30,
+    backgroundColor: orange,
+    shadowColor: 'rgba(255,255,255, 1)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    elevation: 5, // Android
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   list: {
     paddingTop: 40
@@ -145,10 +150,10 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 30,
     color: '#FFFFFF',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   itemNbCards: {
     color: '#EEEEEE',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   }
 });
