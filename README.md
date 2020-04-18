@@ -6,7 +6,7 @@ It is a simple flashcards app : the user is able to create as many Decks as need
 
 The aim of the app is to help the user memorizing things. To that end, they can start a Quiz for each deck, to see if they are able to remember the answers to the questions.
 
-**This app is built with React Native (Expo). It has only been tested on Android (5, 8 and 10) and I do not guarantee its behaviour on iOS devices. **
+<b>This app is built with React Native (Expo). It has only been tested on Android (5, 8 and 10) and I do not guarantee its behaviour on iOS devices.</b>
 
 ## Installation
 
@@ -18,7 +18,7 @@ Installation is simple and can be done through npm or Yarn.
 
 `yarn start OR npm start OR expo start`
 
-Then, you'll be able to launch it through the Expo app.
+Then, you'll be able to launch it through the Expo app (you'll just have to install the app from the Play Store, then use it to scan the QR code that will show).
 
 
 ## Tech/framework used
