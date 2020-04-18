@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from 'react'
 import { View, SafeAreaView, Button, StyleSheet, Text, FlatList, TouchableOpacity, Alert, TouchableWithoutFeedback, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
-import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
 import { white, orange, royalBlue } from '../utils/colors'
 

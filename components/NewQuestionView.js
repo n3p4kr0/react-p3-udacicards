@@ -1,16 +1,12 @@
 import React, { Component, useLayoutEffect } from 'react'
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { white, orange, royalBlue } from '../utils/colors'
 import { useNavigation } from '@react-navigation/native';
 import { addCardToDeck } from '../store/actions'
 
 
 class NewQuestion extends Component {
-    static propTypes = {
-        //title: PropTypes.string.isRequired
-    }
 
     state = {
         questionValue: '',

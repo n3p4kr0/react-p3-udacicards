@@ -1,14 +1,15 @@
 import React, { Component, useLayoutEffect } from 'react'
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, HeaderBackButton } from '@react-navigation/native';
 import { royalBlue, white, orange } from '../utils/colors'
 import { removeDeck } from '../store/actions'
+import { Ionicons } from '@expo/vector-icons'
 import Toast from 'react-native-root-toast';
 
 class DeckDetails extends Component {
     onPressBtnAddCard = () => {
+        console.log(this.props)
         const { title } = this.props.route.params
         this.props.navigation.navigate('NewQuestion', { title: title })
     }
@@ -37,7 +38,6 @@ class DeckDetails extends Component {
             (() => {this.props.navigation.navigate('DeckList')}),
             200
         )
-
     }
 
     render() {
@@ -69,7 +69,16 @@ class DeckDetails extends Component {
 function DeckDetailsView (props) {
     useLayoutEffect(() => {
         props.navigation.setOptions({
-          title: props.route.params.title
+          title: props.route.params.title,
+          headerLeft: () => (
+              <Ionicons 
+                name='md-arrow-back'
+                color="white"
+                action={() => props.navigation.navigate('DeckList')}
+                size={24}
+                style={{marginVertical: 6, marginHorizontal: 14}}
+              />
+          )
         });
       });
 

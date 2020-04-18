@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native';
 import { shuffleArray } from '../utils/helpers'
 import { white, orange, royalBlue } from '../utils/colors'
@@ -13,27 +12,11 @@ class QuizView extends Component {
         super(props)
 
         this.state = {
-            quizMode: false,
-            questions: props.questions,
+            questions: shuffleArray(props.questions),
             counter: 0,
             score: 0,
             currentCardSide: 'question'
         }
-    }
-    static propTypes = {
-        //deck: PropTypes.object.isRequired
-    }
-
-
-    startQuiz = () => {
-        // TODO : Shuffle the deck in the state and activates quizMode
-        const { questions } = this.state.questions
-
-        this.setState((prevState) => ({
-            ...prevState,
-            quizMode: true,
-            questions: shuffleArray(this.state.questions)
-        }))
     }
 
     navigateToDeckDetails = () => {
@@ -42,39 +25,16 @@ class QuizView extends Component {
 
 
     render() {
-        const {questions, counter, score, quizMode, currentCardSide} = this.state
+        const {questions, counter, score, currentCardSide} = this.state
 
-        if(!quizMode) {
+        if(counter !== questions.length) {
             return (
-                <View style={styles.container}>
-                    <View style={styles.title}><Text style={styles.titleText}>Quiz</Text></View>
-                    <View style={styles.description}>
-                        <Text style={styles.descriptionText}>Test your knowledge!{"\n"}{"\n"}Each of the card you added to this deck will
-                        show one by one, and you'll have to guess the answer. If you got it right, you get one point!</Text>
-                    </View>
-                    <View style={styles.quiz}>
-                        { questions.length > 0 
-                        ?
-                            <TouchableOpacity onPress={this.startQuiz} style={styles.btn}>
-                                <Text style={styles.textBtn}>Start the quiz !</Text>
-                            </TouchableOpacity>
-
-                        :   <Text style={styles.text}>To play a quiz, please add at least a card to the deck.</Text>
-                        }
-                    </View>
-                </View>
-            )
-        }
-    
-
-        else if(counter < questions.length) {
-            return(
                 <View style={styles.container}>
                     <View style={styles.counters}>
                         <Text style={styles.questionsCounterText}>{counter+1}/{questions.length}</Text>
                         <Text style={styles.currentScoreText}>Current score : {score}</Text>
                     </View>
-
+    
                     <View style={styles.questionAnswerContainer}>
                         { currentCardSide === 'question' && 
                         <View style={styles.question}>
@@ -100,7 +60,7 @@ class QuizView extends Component {
                                     <Text style={styles.flipBtnText}>See Question</Text>
                                 </TouchableOpacity>
                             </View>
-
+    
                             <View style={styles.moduleCorrectIncorrect}>                        
                                 {/* If the User clicks on Correct, increment his score, flip the card to Question side and show next question (increment counter) */}
                                 <TouchableOpacity 
@@ -121,14 +81,17 @@ class QuizView extends Component {
                         </View>                     
                         }
                     </View>
-
-                </View>
+    
+                </View> 
             )
         }
 
         return (
             <View style={styles.container}>
-                <Text style={styles.finalResultsText}>Congrats ! You did {score} out of {questions.length}, which is {(score / questions.length * 100).toFixed(2)}%. </Text>
+                {score > (questions.length/2) 
+                    ? (<Text style={styles.finalResultsText}>Congrats ! You did {score} out of {questions.length}, which is {(score / questions.length * 100).toFixed(2)}%. </Text>)
+                    : (<Text style={styles.finalResultsText}>You did {score} out of {questions.length}, which is {(score / questions.length * 100).toFixed(2)}%. You can do better! </Text>)
+                }
                 <TouchableOpacity onPress={this.navigateToDeckDetails} style={styles.btn}>
                     <Text style={styles.textBtn}>Go back to the Deck</Text>
                 </TouchableOpacity>
@@ -145,28 +108,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    title: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    titleText: {
-        color: white,
-        fontSize: 50,
-        fontWeight: 'bold'
-    },
-    description: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: 30,
-        marginRight: 30
-    },
-    descriptionText: {
-        color: white,
-        fontSize: 20,
-        textAlign: 'center'
     },
     counters: {
         flex: 1,

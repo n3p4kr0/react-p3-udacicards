@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { createNewDeck } from '../store/actions'
 import { white, orange, royalBlue } from '../utils/colors'
 
@@ -35,7 +34,8 @@ class NewDeckView extends Component {
 
         setTimeout((() => {
             this.props.navigation.navigate("DeckDetails", { title: this.state.inputValue, questions: [] }) 
-        }), 200)    }
+        }), 200)    
+    }
 
     render() {
         return (
