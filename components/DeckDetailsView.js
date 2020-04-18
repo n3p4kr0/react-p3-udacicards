@@ -1,5 +1,5 @@
 import React, { Component, useLayoutEffect } from 'react'
-import { View, StyleSheet, Text, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { useNavigation, HeaderBackButton } from '@react-navigation/native';
 import { royalBlue, white, orange } from '../utils/colors'
@@ -9,7 +9,6 @@ import Toast from 'react-native-root-toast';
 
 class DeckDetails extends Component {
     onPressBtnAddCard = () => {
-        console.log(this.props)
         const { title } = this.props.route.params
         this.props.navigation.navigate('NewQuestion', { title: title })
     }
@@ -93,13 +92,6 @@ function mapStateToProps({ deck }) {
     }
 }
 
-export default connect(mapStateToProps)((props) => {
-    const navigation = useNavigation()
-
-    return (<DeckDetailsView {...props} navigation={navigation}/>)
-})
-
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -141,3 +133,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
   });
+
+  
+
+export default connect(mapStateToProps)((props) => {
+    const navigation = useNavigation()
+
+    return (<DeckDetailsView {...props} navigation={navigation}/>)
+})

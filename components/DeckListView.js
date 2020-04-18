@@ -1,40 +1,51 @@
-import React, { useLayoutEffect } from 'react'
-import { View, SafeAreaView, Button, StyleSheet, Text, FlatList, TouchableOpacity, Alert, TouchableWithoutFeedback, AsyncStorage } from 'react-native'
+import React, { useLayoutEffect, Component } from 'react'
+import { View,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Animated
+} from 'react-native'
 import { connect } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { white, orange, royalBlue } from '../utils/colors'
 
-/*function removeData() {
-  AsyncStorage.clear()
-    .then(() => {
-      console.log('DELETED')
-    }).catch(e => {
-      console.log('ERROR : ' + e)
-    }).finally(() => {
-      console.log('Done')
-    })
-}*/
+class DeckListItem extends Component{
+  state = {
+    bounceValue: new Animated.Value(1)
+  }
 
-function DeckListItem(deck) {
-    deck = deck.deck
+  onItemSelected = () => {
+    Animated.sequence([
+      Animated.timing(this.state.bounceValue, { duration: 200, toValue: 1.12 }),
+      Animated.spring(this.state.bounceValue, { toValue: 1, friction: 4 })
+    ]).start()
+    
+    setTimeout( () => {
+      this.props.navigation.navigate('DeckDetails', { title: this.props.deck.title, questions: this.props.deck.questions })
+    },220)    
+  }
 
-    const navigation = useNavigation();
+  render() {
+    const deck = this.props.deck
+
     return (
-      <View>
+      <Animated.View style={{ transform: [{ scale: this.state.bounceValue }] }} >
         <TouchableOpacity
           style={styles.itemContainer}
           activeOpacity={0.7}
           underlayColor="rgba(253,138,94,0)" 
-          onPress={() => { 
-            navigation.navigate('DeckDetails', { title: deck.title, questions: deck.questions })
-          }}
+          onPress={this.onItemSelected}
         >
             <Text style={styles.itemTitle}>{deck.title}</Text>
             <Text style={styles.itemNbCards}>{deck.questions.length} card{deck.questions.length > 1 ? 's' : ''}</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     )
+  }
 }
 
 
@@ -58,15 +69,12 @@ function DeckListView(props) {
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcomeContent}>Welcome ! Your brain is nothing more than a muscle: keep exercising to get better!</Text>
           </View>
-          {/*<TouchableOpacity
-            onPress={removeData}>
-            <Text>_DEV_ : DELETE ALL DATA FROM ASYNC STORAGE</Text>
-          </TouchableOpacity>*/}
           <SafeAreaView style={styles.listContainer}>
             <FlatList 
-              style={styles.list}
+              //style={styles.list}
+              contentContainerStyle={styles.list}
               data={decks}
-              renderItem={item => {return (<DeckListItem deck={item.item} />)}}
+              renderItem={item => {return (<DeckListItem deck={item.item} navigation={navigation}/>)}}
               keyExtractor={item => item.title}
             />
           </SafeAreaView>
@@ -141,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   list: {
-    paddingTop: 40
+    paddingVertical: 20,
   },
   itemTitle: {
     fontSize: 30,
