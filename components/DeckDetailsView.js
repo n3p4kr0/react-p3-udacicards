@@ -74,7 +74,7 @@ function DeckDetailsView (props) {
               <Ionicons 
                 name='md-arrow-back'
                 color="white"
-                action={() => props.navigation.navigate('DeckList')}
+                onPress={() => props.navigation.navigate('DeckList')}
                 size={24}
                 style={{marginVertical: 6, marginHorizontal: 14}}
               />
