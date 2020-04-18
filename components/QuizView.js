@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
-import { shuffleArray } from '../utils/helpers'
+import { shuffleArray, clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import { white, orange, royalBlue } from '../utils/colors'
-
-
 
 class QuizView extends Component {
     constructor(props) {
@@ -17,6 +15,9 @@ class QuizView extends Component {
             score: 0,
             currentCardSide: 'question'
         }
+
+        clearLocalNotification()
+          .then(setLocalNotification)
     }
 
     navigateToDeckDetails = () => {

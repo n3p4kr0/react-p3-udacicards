@@ -29,9 +29,6 @@ function DeckListItem(deck) {
           onPress={() => { 
             navigation.navigate('DeckDetails', { title: deck.title, questions: deck.questions })
           }}
-          onLongPress={() => {
-            Alert.alert('Appui long', 'TODO : Add a menu allowing to delete the deck or change its title')
-          }}
         >
             <Text style={styles.itemTitle}>{deck.title}</Text>
             <Text style={styles.itemNbCards}>{deck.questions.length} card{deck.questions.length > 1 ? 's' : ''}</Text>

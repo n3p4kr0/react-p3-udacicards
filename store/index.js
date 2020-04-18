@@ -7,6 +7,8 @@ import middleware from './middleware'
 const persistConfig = {
  key: 'root',
  storage: AsyncStorage,
+ // DEV
+ timeout: 10000
 };
 
 const pReducer = persistReducer(persistConfig, reducers);

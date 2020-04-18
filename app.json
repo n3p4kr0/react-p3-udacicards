@@ -20,7 +20,8 @@
       "**/*"
     ],
     "android": {
-      "package": "com.faremdev.udacicards"
+      "package": "com.faremdev.udacicards",
+      "permissions": ["NOTIFICATIONS"]
     }
   }
 }

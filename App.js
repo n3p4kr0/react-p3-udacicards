@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Notifications } from 'expo'
 import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -15,10 +16,12 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './store'
 import { Provider } from 'react-redux'
 import { handleGetInitialData } from './store/actions'
-import { white, royalBlue } from './utils/colors'
-import Spinner from 'react-native-loading-spinner-overlay';
+import { white, royalBlue, orange } from './utils/colors'
+import { setLocalNotification, createNotification } from './utils/helpers'
+import './utils/ReactotronConfig'
 
 const Stack = createStackNavigator();
+
 
 
 export default class App extends React.Component {
@@ -26,6 +29,10 @@ export default class App extends React.Component {
     super(props)
 
     this.state = { spinner: true }
+  }
+
+  componentDidMount() {
+    setLocalNotification()
   }
 
   getInitialData = () => {
@@ -38,14 +45,13 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor} onBeforeLift={this.getInitialData()}>
-          <Spinner visible={Object.keys(store.getState().decks) === 0} textContent={'Loading'} textStyle={styles.spinner} />
           <NavigationContainer>
             <Stack.Navigator
               style={styles.container} 
               initialRouteName='DeckList'
               screenOptions= {{
                 headerStyle: {
-                  backgroundColor: royalBlue
+                  backgroundColor: orange
                 },
                 headerTitleAlign: 'center',
                 headerTintColor: white,
