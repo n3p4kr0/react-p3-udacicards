@@ -71,7 +71,6 @@ function DeckListView(props) {
           </View>
           <SafeAreaView style={styles.listContainer}>
             <FlatList 
-              //style={styles.list}
               contentContainerStyle={styles.list}
               data={decks}
               renderItem={item => {return (<DeckListItem deck={item.item} navigation={navigation}/>)}}

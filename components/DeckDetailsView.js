@@ -8,11 +8,13 @@ import { Ionicons } from '@expo/vector-icons'
 import Toast from 'react-native-root-toast';
 
 class DeckDetails extends Component {
+    // Routes the user towards the form to add a Card to the current deck
     onPressBtnAddCard = () => {
         const { title } = this.props.route.params
         this.props.navigation.navigate('NewQuestion', { title: title })
     }
 
+    // Routes the user towards the QuizView
     onPressBtnShowQuiz = () => {
         if(this.props.route.params.questions.length === 0) {
             let toast = Toast.show('To start a quiz, please add at least one card to your deck.', {
@@ -31,6 +33,7 @@ class DeckDetails extends Component {
         )
     }
 
+    // Removes the current deck (no confirmation asked) and routes to the homepage
     onPressBtnRemoveDeck = () => {
         this.props.dispatch(removeDeck(this.props.route.params.title))
         setTimeout(

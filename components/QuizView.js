@@ -15,7 +15,8 @@ class QuizView extends Component {
             score: 0,
             currentCardSide: 'question'
         }
-
+        
+        // Each time the user starts a quiz, delete the reminder notification and add a new one for the next day
         clearLocalNotification()
           .then(setLocalNotification)
     }
@@ -82,7 +83,6 @@ class QuizView extends Component {
                         </View>                     
                         }
                     </View>
-    
                 </View> 
             )
         }

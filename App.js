@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
@@ -16,7 +16,6 @@ import { handleGetInitialData } from './store/actions'
 import { white, orange } from './utils/colors'
 import { setLocalNotification } from './utils/helpers'
 import './utils/ReactotronConfig'
-import { Transition } from 'react-native-reanimated';
 
 const Stack = createStackNavigator();
 

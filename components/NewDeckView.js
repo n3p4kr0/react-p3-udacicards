@@ -11,8 +11,12 @@ class NewDeckView extends Component {
         error: ''
     }
 
+    onValueChanged = (text) => {
+        this.setState((prevState) => this.setState({ ...prevState, inputValue: text, error: '' }))
+    }
+
     onSubmit = () => {
-        // TODO : Check if no other deck already has the same title
+        // Checks if no other deck already has the same title
         if(this.props.decks.hasOwnProperty(this.state.inputValue)) {
             this.setState((prevState) => ({
                 ...prevState,
@@ -21,7 +25,7 @@ class NewDeckView extends Component {
             return;
         }
 
-        // TODO : Check if the name is not empty
+        // Checks if the name is not empty
         if(this.state.inputValue === '') {
             this.setState((prevState) => ({
                 ...prevState,
@@ -30,6 +34,7 @@ class NewDeckView extends Component {
             return;
         }
 
+        // Creates the deck, wait 200ms and routes to the aformentioned deck's details
         this.props.dispatch(createNewDeck(this.state.inputValue))
 
         setTimeout((() => {
@@ -45,8 +50,7 @@ class NewDeckView extends Component {
                     <TextInput
                       style={styles.input}
                       placeholder='Enter a deck title'
-                      // TODO : CHANGE THIS TO A CALLBACK FUNCTION
-                      onChangeText={ text => this.setState((prevState) => this.setState({ ...prevState, inputValue: text, error: '' }))}
+                      onChangeText={ (text) => this.onValueChanged(text) }
                       value={this.state.inputValue}
                       />
                     { this.state.error !== '' && (<Text style={styles.error}>{this.state.error}</Text>) }

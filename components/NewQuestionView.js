@@ -13,6 +13,7 @@ class NewQuestion extends Component {
         answerValue: ''
     }
 
+    // Controlled form
     onChangeQuestionValue = (newValue) => {
         this.setState((prevState) => ({
             ...prevState,
@@ -20,6 +21,7 @@ class NewQuestion extends Component {
         }))
     }
 
+    // Controlled form
     onChangeAnswerValue = (newValue) => {
         this.setState((prevState) => ({
             ...prevState,
@@ -27,6 +29,7 @@ class NewQuestion extends Component {
         }))
     }
 
+    // On form submission, add the Card to the Deck and routes to the Deck's details
     onSubmit = () => {
         const question = {
             question: this.state.questionValue,
